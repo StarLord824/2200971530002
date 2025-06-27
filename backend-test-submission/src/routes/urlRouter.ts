@@ -54,7 +54,8 @@ router.get("/:id", async (req, res) => {
       const referrer = req.get("Referer") || "direct";
       const newClick = {
         timestamp: new Date().toISOString(),
-        referrer
+        referrer,
+        location: getCoarseLocation(req.ip),
       };
       
     // Get existing clicks
@@ -83,6 +84,8 @@ router.get("/:id", async (req, res) => {
 
 export default router;
 
+
 function getCoarseLocation(ip: string | undefined) {
   throw new Error("Function not implemented.");
 }
+
