@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/controller/shortcodegenerator.ts","./src/controller/shortener.ts","./src/routes/shorturl.ts"],"version":"5.8.3"}
