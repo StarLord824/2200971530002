@@ -39,6 +39,9 @@ router.get("/:id", async (req, res) => {
     where: {
       shortenedUrl: id,
     },
+    include: {
+      analytics: true,
+    },
   });
 
   if (!entry) {
@@ -48,21 +51,38 @@ router.get("/:id", async (req, res) => {
         res.status(410).json({ error: 'Shortcode expired' });
       }
 
-      //update anylytics
-      await prisma.analytics.update({
-        where: {
-          id: entry.analyticsId,
+      const referrer = req.get("Referer") || "direct";
+      const newClick = {
+        timestamp: new Date().toISOString(),
+        referrer
+      };
+      
+    // Get existing clicks
+    let existingDetails: any[] = [];
+    if (Array.isArray(entry.analytics?.clickDetails)) {
+      existingDetails = entry.analytics.clickDetails;
+    }
+
+    //update anylytics
+    await prisma.analytics.update({
+      where: {
+        id: entry.analyticsId,
+      },
+      data: {
+        clicks: {
+          increment: 1,
         },
-        data: {
-          clicks: {
-            increment: 1,
-          },
-        },
-      });    
-      console.log(`Redirected to: ${entry.originalUrl}`);
-      res.redirect(entry.originalUrl);
+        clickDetails: [...existingDetails, newClick],
+      },
+    });    
+    console.log(`Redirected to: ${entry.originalUrl}`);
+    res.redirect(entry.originalUrl);
   }
 
 });
 
 export default router;
+
+function getCoarseLocation(ip: string | undefined) {
+  throw new Error("Function not implemented.");
+}

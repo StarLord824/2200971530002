@@ -16,10 +16,12 @@
     "@prisma/client": "^6.10.1",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.3",
+    "@types/geoip-lite": "^1.4.4",
     "axios": "^1.10.0",
     "body-parser": "^2.2.0",
     "dotenv": "^16.6.0",
     "express": "^5.1.0",
+    "geoip-lite": "^1.4.10",
     "prisma": "^6.10.1"
   }
 }

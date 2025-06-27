@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import urlRouter from "./routes/shortUrl";
+import urlRouter from "./routes/urlRouter";
 
 const app = express();
 
